@@ -14,10 +14,12 @@ func main() {
 		log.Fatal("usage: advent-of-code-2017 day [args...]")
 	}
 
-	day, args := args[1], args[2:]
+	day, args := args[1], args[1:]
 
 	switch day {
-	case "1":
+	case "1a", "1":
+		p1.Main(args)
+	case "1b":
 		p1.Main(args)
 	default:
 		log.Fatalf("%s is unknown", day)
