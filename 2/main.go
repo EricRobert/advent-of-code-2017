@@ -5,13 +5,14 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"sort"
 	"strconv"
 	"strings"
 )
 
 func Main(args []string) {
 	if len(args) != 2 {
-		log.Fatal("usage: advent-of-code-1027 2 'file.tsv'")
+		log.Fatal("usage: advent-of-code-1027 2[a|b] 'file.tsv'")
 	}
 
 	data, err := ioutil.ReadFile(args[1])
@@ -19,7 +20,15 @@ func Main(args []string) {
 		log.Fatalf("%s: %s", args[1], err)
 	}
 
-	n := Checksum(Parse(string(data)))
+	n, p := 0, Parse(string(data))
+
+	switch args[0] {
+	case "2a", "2":
+		n = DiffSum(p)
+	case "2b":
+		n = EvenlyDivisibleSum(p)
+	}
+
 	fmt.Println(n)
 }
 
@@ -49,7 +58,7 @@ func Parse(data string) [][]int {
 	return r
 }
 
-func Checksum(rows [][]int) int {
+func DiffSum(rows [][]int) int {
 	diff := func(row []int) int {
 		if len(row) == 0 {
 			return 0
@@ -74,6 +83,37 @@ func Checksum(rows [][]int) int {
 
 	for _, row := range rows {
 		sum += diff(row)
+	}
+
+	return sum
+}
+
+func EvenlyDivisibleSum(rows [][]int) int {
+	check := func(row []int) int {
+		sort.Ints(row)
+
+		total := 0
+
+		for i, x := range row {
+			for j := 0; j != i; j++ {
+				y := row[j]
+				if k := x / y; k*y == x {
+					total += k
+				}
+
+				if y*2 >= x {
+					break
+				}
+			}
+		}
+
+		return total
+	}
+
+	sum := 0
+
+	for _, row := range rows {
+		sum += check(row)
 	}
 
 	return sum
