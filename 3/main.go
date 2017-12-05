@@ -8,7 +8,7 @@ import (
 
 func Main(args []string) {
 	if len(args) != 2 {
-		log.Fatal("usage: advent-of-code-1027 3 number")
+		log.Fatal("usage: advent-of-code-1027 3[a|b] number")
 	}
 
 	i, err := strconv.Atoi(args[1])
@@ -16,12 +16,17 @@ func Main(args []string) {
 		log.Fatalf("%d: %s", i, err)
 	}
 
-	fmt.Println(Steps(i))
+	switch args[2] {
+	case "3a", "3":
+		fmt.Println(Steps(i))
+	case "3b":
+		fmt.Println(Sums(i))
+	}
 }
 
-func Steps(k int) int {
+func cell(k int) (int, int, int) {
 	if k == 0 || k == 1 {
-		return 0
+		return 0, 0, 0
 	}
 
 	// here is my thinking:
@@ -64,11 +69,17 @@ func Steps(k int) int {
 	dx := j - (h - u)
 	dy := j - u
 
-	if j < h/2 {
+	if i < h {
 		dx = -dx
 	} else {
 		dy = -dy
 	}
+
+	return dx, dy, u
+}
+
+func Steps(k int) int {
+	dx, dy, u := cell(k)
 
 	abs := func(x int) int {
 		if x < 0 {
@@ -88,4 +99,54 @@ func Steps(k int) int {
 	dy = max(abs(dy))
 
 	return dx + dy
+}
+
+func Sums(stop int) int {
+	m := map[string]int{
+		"0,0": 1,
+	}
+
+	// my thinking here is that:
+	// we will compute the x,y position of each cell and keep that in a map
+	// with dx +/- 1 and dy +/- 1 we can lookup and sum
+
+	look := func(x, y int) int {
+		i := fmt.Sprintf("%d,%d", x, y)
+		return m[i]
+	}
+
+	around := func(k int) int {
+		x, y, u := cell(k)
+
+		max := func(x int) int {
+			if x < -u {
+				return -u
+			}
+			if x > u {
+				return u
+			}
+			return x
+		}
+
+		x = max(x)
+		y = max(y)
+		value := 0
+		value += look(x-1, y-1)
+		value += look(x-1, y)
+		value += look(x-1, y+1)
+		value += look(x, y-1)
+		value += look(x, y+1)
+		value += look(x+1, y-1)
+		value += look(x+1, y)
+		value += look(x+1, y+1)
+		m[fmt.Sprintf("%d,%d", x, y)] = value
+		return value
+	}
+
+	sum := 1
+	for k := 2; k <= stop; k++ {
+		sum = around(k)
+	}
+
+	return sum
 }

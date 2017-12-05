@@ -23,7 +23,7 @@ func main() {
 		p1.Main(args)
 	case "2a", "2b", "2":
 		p2.Main(args)
-	case "3":
+	case "3a", "3b", "3":
 		p3.Main(args)
 	default:
 		log.Fatalf("%s is unknown", day)
