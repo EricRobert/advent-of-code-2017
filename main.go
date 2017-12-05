@@ -8,6 +8,7 @@ import (
 	p2 "./2"
 	p3 "./3"
 	p4 "./4"
+	p5 "./5"
 )
 
 func main() {
@@ -28,6 +29,8 @@ func main() {
 		p3.Main(args)
 	case "4a", "4b", "4":
 		p4.Main(args)
+	case "5a", "5b", "5":
+		p5.Main(args)
 	default:
 		log.Fatalf("%s is unknown", day)
 	}
