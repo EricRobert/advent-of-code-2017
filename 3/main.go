@@ -16,7 +16,7 @@ func Main(args []string) {
 		log.Fatalf("%d: %s", i, err)
 	}
 
-	switch args[2] {
+	switch args[0] {
 	case "3a", "3":
 		fmt.Println(Steps(i))
 	case "3b":
