@@ -9,7 +9,7 @@ import (
 
 func Main(args []string) {
 	if len(args) != 2 {
-		log.Fatal("usage: advent-of-code-1027 5 'filename'")
+		log.Fatal("usage: advent-of-code-1027 6[a|b] 'filename'")
 	}
 
 	ints := make([]int, 0)
@@ -23,22 +23,33 @@ func Main(args []string) {
 		ints = append(ints, i)
 	}
 
-	fmt.Print(Run(ints))
+	switch args[0] {
+	case "6a", "6":
+		fmt.Print(Run(ints))
+	case "6b":
+		fmt.Print(Loop(ints))
+	}
 }
 
-func Run(banks []int) int {
-	m := make(map[string]struct{})
+type Runner interface {
+	Test(banks []int) bool
+}
 
-	hit := func() bool {
-		i := fmt.Sprintf("%v", banks)
-		if _, ok := m[i]; ok {
-			return true
-		}
+type HitRunner struct {
+	m map[string]struct{}
+}
 
-		m[i] = struct{}{}
-		return false
+func (r *HitRunner) Test(banks []int) bool {
+	i := fmt.Sprintf("%v", banks)
+	if _, ok := r.m[i]; ok {
+		return true
 	}
 
+	r.m[i] = struct{}{}
+	return false
+}
+
+func run(banks []int, r Runner) {
 	max := func() (int, int) {
 		k, n := 0, banks[0]
 
@@ -61,10 +72,38 @@ func Run(banks []int) int {
 			banks[j%len(banks)]++
 		}
 
-		if hit() {
+		if r.Test(banks) {
 			break
 		}
 	}
+}
 
-	return len(m) + 1
+func Run(banks []int) int {
+	r := HitRunner{m: make(map[string]struct{})}
+	run(banks, &r)
+	return len(r.m) + 1
+}
+
+type LoopRunner struct {
+	p []int
+	n int
+}
+
+func (r *LoopRunner) Test(banks []int) bool {
+	r.n++
+
+	for i := range banks {
+		if banks[i] != r.p[i] {
+			return false
+		}
+	}
+
+	return true
+}
+
+func Loop(banks []int) int {
+	Run(banks)
+	r := LoopRunner{p: append([]int{}, banks...)}
+	run(banks, &r)
+	return r.n
 }
