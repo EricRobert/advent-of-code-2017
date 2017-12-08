@@ -15,7 +15,7 @@ func TestRoot(t *testing.T) {
 		},
 		{
 			File:   "a.txt",
-			Result: "coco",
+			Result: "gmcrj",
 		},
 	}
 
@@ -23,6 +23,29 @@ func TestRoot(t *testing.T) {
 		s := Root(test.File)
 		if s != test.Result {
 			t.Fatalf("%d: '%s' (should be %s)", i, s, test.Result)
+		}
+	}
+}
+
+func TestWrong(t *testing.T) {
+	tests := []struct {
+		File   string
+		Result int
+	}{
+		{
+			File:   "t.txt",
+			Result: 60,
+		},
+		{
+			File:   "a.txt",
+			Result: 391,
+		},
+	}
+
+	for i, test := range tests {
+		n := FirstWrong(test.File)
+		if n != test.Result {
+			t.Fatalf("%d: '%d' (should be %d)", i, n, test.Result)
 		}
 	}
 }
