@@ -3,8 +3,8 @@ package p2
 import (
 	"bufio"
 	"fmt"
-	"io/ioutil"
 	"log"
+	"os"
 	"sort"
 	"strconv"
 	"strings"
@@ -15,27 +15,27 @@ func Main(args []string) {
 		log.Fatal("usage: advent-of-code-1027 2[a|b] 'file.tsv'")
 	}
 
-	data, err := ioutil.ReadFile(args[1])
-	if err != nil {
-		log.Fatalf("%s: %s", args[1], err)
-	}
-
-	n, p := 0, Parse(string(data))
+	n := 0
 
 	switch args[0] {
 	case "2a", "2":
-		n = DiffSum(p)
+		n = DiffSum(args[1])
 	case "2b":
-		n = EvenlyDivisibleSum(p)
+		n = EvenlyDivisibleSum(args[1])
 	}
 
 	fmt.Println(n)
 }
 
-func Parse(data string) [][]int {
+func load(filename string) [][]int {
+	f, err := os.Open(filename)
+	if err != nil {
+		log.Fatalf("%s: %s", filename, err)
+	}
+
 	r := make([][]int, 0)
 
-	s := bufio.NewScanner(strings.NewReader(data))
+	s := bufio.NewScanner(f)
 	for s.Scan() {
 		line := strings.TrimSpace(s.Text())
 		if len(line) == 0 {
@@ -58,7 +58,9 @@ func Parse(data string) [][]int {
 	return r
 }
 
-func DiffSum(rows [][]int) int {
+func DiffSum(filename string) int {
+	rows := load(filename)
+
 	diff := func(row []int) int {
 		if len(row) == 0 {
 			return 0
@@ -88,7 +90,9 @@ func DiffSum(rows [][]int) int {
 	return sum
 }
 
-func EvenlyDivisibleSum(rows [][]int) int {
+func EvenlyDivisibleSum(filename string) int {
+	rows := load(filename)
+
 	check := func(row []int) int {
 		sort.Ints(row)
 

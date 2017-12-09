@@ -1,26 +1,26 @@
 package p4
 
 import (
-	"strings"
 	"testing"
 )
 
 func TestValidCount(t *testing.T) {
 	tests := []struct {
-		Lines  string
+		File   string
 		Result int
 	}{
 		{
-			Lines: `
-aa bb cc dd ee
-aa bb cc dd aa
-aa bb cc dd aaa`,
+			File:   "ta.txt",
 			Result: 2,
+		},
+		{
+			File:   "a.txt",
+			Result: 451,
 		},
 	}
 
 	for i, test := range tests {
-		n := ValidCount(strings.Split(test.Lines, "\n"))
+		n := ValidCount(test.File)
 		if n != test.Result {
 			t.Fatalf("%d: %d (should be %d)", i, n, test.Result)
 		}
@@ -29,22 +29,21 @@ aa bb cc dd aaa`,
 
 func TestNewValidCount(t *testing.T) {
 	tests := []struct {
-		Lines  string
+		File   string
 		Result int
 	}{
 		{
-			Lines: `
-abcde fghij
-abcde xyz ecdab
-a ab abc abd abf abj
-iiii oiii ooii oooi oooo
-oiii ioii iioi iiio`,
+			File:   "tb.txt",
 			Result: 3,
+		},
+		{
+			File:   "b.txt",
+			Result: 223,
 		},
 	}
 
 	for i, test := range tests {
-		n := NewValidCount(strings.Split(test.Lines, "\n"))
+		n := NewValidCount(test.File)
 		if n != test.Result {
 			t.Fatalf("%d: %d (should be %d)", i, n, test.Result)
 		}

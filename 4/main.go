@@ -13,19 +13,21 @@ func Main(args []string) {
 		log.Fatal("usage: advent-of-code-1027 4[a|b] 'filename'")
 	}
 
-	data, err := ioutil.ReadFile(args[1])
-	if err != nil {
-		log.Fatalf("%s: %s", args[1], err)
-	}
-
-	lines := strings.Split(string(data), "\n")
-
 	switch args[0] {
 	case "4a", "4":
-		fmt.Println(ValidCount(lines))
+		fmt.Println(ValidCount(args[1]))
 	case "4b":
-		fmt.Println(NewValidCount(lines))
+		fmt.Println(NewValidCount(args[1]))
 	}
+}
+
+func load(filename string) []string {
+	data, err := ioutil.ReadFile(filename)
+	if err != nil {
+		log.Fatalf("%s: %s", filename, err)
+	}
+
+	return strings.Split(string(data), "\n")
 }
 
 func Valid(text string) bool {
@@ -42,7 +44,9 @@ func Valid(text string) bool {
 	return true
 }
 
-func ValidCount(list []string) int {
+func ValidCount(filename string) int {
+	list := load(filename)
+
 	total := 0
 
 	for _, item := range list {
@@ -80,7 +84,9 @@ func NewValid(text string) bool {
 	return true
 }
 
-func NewValidCount(list []string) int {
+func NewValidCount(filename string) int {
+	list := load(filename)
+
 	total := 0
 
 	for _, item := range list {
