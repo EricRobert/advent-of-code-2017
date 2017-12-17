@@ -126,7 +126,7 @@ func LotsOfDances(filename, key string) string {
 	}
 
 	n := len(m)
-	log.Println("loop:", pretty(p), n)
+	//log.Println("loop:", pretty(p), n)
 
 	for i := 0; i < 1000000000%n; i++ {
 		p = play(filename, p)
