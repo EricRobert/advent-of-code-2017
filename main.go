@@ -14,6 +14,7 @@ import (
 	p16 "./16"
 	p17 "./17"
 	p18 "./18"
+	p19 "./19"
 	p2 "./2"
 	p3 "./3"
 	p4 "./4"
@@ -70,6 +71,8 @@ func main() {
 		p17.Main(args)
 	case "18a", "18b", "18":
 		p18.Main(args)
+	case "19a", "19b", "19":
+		p19.Main(args)
 	default:
 		log.Fatalf("%s is unknown", day)
 	}
