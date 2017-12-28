@@ -38,7 +38,7 @@ func TestLongest(t *testing.T) {
 		},
 		{
 			File:   "a.txt",
-			Result: 31,
+			Result: 1471,
 		},
 	}
 

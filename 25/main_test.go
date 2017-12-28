@@ -9,7 +9,7 @@ func TestTuring(t *testing.T) {
 		Result int
 	}{
 		{
-			Result: 31,
+			Result: 633,
 		},
 	}
 
