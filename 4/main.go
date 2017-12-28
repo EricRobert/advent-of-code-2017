@@ -10,7 +10,7 @@ import (
 
 func Main(args []string) {
 	if len(args) != 2 {
-		log.Fatal("usage: advent-of-code-1027 4[a|b] 'filename'")
+		log.Fatal("usage: advent-of-code-1027 4[a|b] 'input'")
 	}
 
 	switch args[0] {
@@ -21,13 +21,17 @@ func Main(args []string) {
 	}
 }
 
-func load(filename string) []string {
-	data, err := ioutil.ReadFile(filename)
-	if err != nil {
-		log.Fatalf("%s: %s", filename, err)
+func load(s string) []string {
+	if strings.HasPrefix(s, "@") {
+		f, err := ioutil.ReadFile(s[1:])
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		s = string(f)
 	}
 
-	return strings.Split(string(data), "\n")
+	return strings.Split(s, "\n")
 }
 
 func Valid(text string) bool {
@@ -44,8 +48,8 @@ func Valid(text string) bool {
 	return true
 }
 
-func ValidCount(filename string) int {
-	list := load(filename)
+func ValidCount(s string) int {
+	list := load(s)
 
 	total := 0
 
@@ -84,8 +88,8 @@ func NewValid(text string) bool {
 	return true
 }
 
-func NewValidCount(filename string) int {
-	list := load(filename)
+func NewValidCount(s string) int {
+	list := load(s)
 
 	total := 0
 

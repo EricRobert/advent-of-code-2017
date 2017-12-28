@@ -6,46 +6,46 @@ import (
 
 func TestDuet(t *testing.T) {
 	tests := []struct {
-		File   string
+		Input  string
 		Result int
 	}{
 		{
-			File:   "t1.txt",
+			Input:  "@t1.txt",
 			Result: 4,
 		},
 		{
-			File:   "a.txt",
+			Input:  "@a.txt",
 			Result: 1187,
 		},
 	}
 
 	for i, test := range tests {
-		n := Duet(test.File)
+		n := Duet(test.Input)
 		if n != test.Result {
-			t.Fatalf("%d: %s '%d' (should be %d)", i, test.File, n, test.Result)
+			t.Fatalf("a.%d: %s '%d' (should be %d)", i, test.Input, n, test.Result)
 		}
 	}
 }
 
 func TestTwo(t *testing.T) {
 	tests := []struct {
-		File   string
+		Input  string
 		Result int
 	}{
 		{
-			File:   "t2.txt",
+			Input:  "@t2.txt",
 			Result: 3,
 		},
 		{
-			File:   "a.txt",
+			Input:  "@a.txt",
 			Result: 5969,
 		},
 	}
 
 	for i, test := range tests {
-		n := Two(test.File)
+		n := Two(test.Input)
 		if n != test.Result {
-			t.Fatalf("%d: %s '%d' (should be %d)", i, test.File, n, test.Result)
+			t.Fatalf("b.%d: %s '%d' (should be %d)", i, test.Input, n, test.Result)
 		}
 	}
 }

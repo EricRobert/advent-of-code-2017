@@ -6,26 +6,26 @@ import (
 
 func TestWalk(t *testing.T) {
 	tests := []struct {
-		File   string
+		Input  string
 		Result string
 		Steps  int
 	}{
 		{
-			File:   "t.txt",
+			Input:  "@t.txt",
 			Result: "ABCDEF",
 			Steps:  38,
 		},
 		{
-			File:   "a.txt",
+			Input:  "@a.txt",
 			Result: "VTWBPYAQFU",
 			Steps:  17358,
 		},
 	}
 
 	for i, test := range tests {
-		s, n := Walk(test.File)
+		s, n := Walk(test.Input)
 		if s != test.Result || n != test.Steps {
-			t.Fatalf("%d: %s '%s' %d (should be %s %d)", i, test.File, s, n, test.Result, test.Steps)
+			t.Fatalf("a.%d: %s '%s' %d (should be %s %d)", i, test.Input, s, n, test.Result, test.Steps)
 		}
 	}
 }

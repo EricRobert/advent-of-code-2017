@@ -6,31 +6,31 @@ import (
 
 func TestPixels(t *testing.T) {
 	tests := []struct {
-		File       string
+		Input      string
 		Iterations int
 		Result     int
 	}{
 		{
-			File:       "t.txt",
+			Input:      "@t.txt",
 			Iterations: 2,
 			Result:     12,
 		},
 		{
-			File:       "a.txt",
+			Input:      "@a.txt",
 			Iterations: 5,
 			Result:     205,
 		},
 		{
-			File:       "a.txt",
+			Input:      "@a.txt",
 			Iterations: 18,
 			Result:     3389823,
 		},
 	}
 
 	for i, test := range tests {
-		n := Pixels(test.File, test.Iterations)
+		n := Pixels(test.Input, test.Iterations)
 		if n != test.Result {
-			t.Fatalf("%d: %s '%d' (should be %d)", i, test.File, n, test.Result)
+			t.Fatalf("a.%d: %s @ %d '%d' (should be %d)", i, test.Iterations, test.Input, n, test.Result)
 		}
 	}
 }

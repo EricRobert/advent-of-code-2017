@@ -28,15 +28,19 @@ type Firewall struct {
 	d []int
 }
 
-func load(filename string) (*Firewall, int) {
-	f, err := ioutil.ReadFile(filename)
-	if err != nil {
-		log.Fatal(err)
+func load(s string) (*Firewall, int) {
+	if strings.HasPrefix(s, "@") {
+		f, err := ioutil.ReadFile(s[1:])
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		s = string(f)
 	}
 
 	max, m := 0, make(map[int]int)
 
-	for _, line := range strings.Split(string(f), "\n") {
+	for _, line := range strings.Split(s, "\n") {
 		if line == "" {
 			continue
 		}
@@ -101,8 +105,8 @@ func (f *Firewall) reset() {
 	}
 }
 
-func Severity(filename string) int {
-	f, n := load(filename)
+func Severity(s string) int {
+	f, n := load(s)
 
 	total := 0
 
@@ -117,8 +121,8 @@ func Severity(filename string) int {
 	return total
 }
 
-func Delay(filename string) int {
-	f, n := load(filename)
+func Delay(s string) int {
+	f, n := load(s)
 	delay := 0
 
 	for {
@@ -153,8 +157,8 @@ func Delay(filename string) int {
 // It takes forever to get an answer...
 // Let's try again.
 
-func Delay2(filename string) int {
-	f, _ := load(filename)
+func Delay2(s string) int {
+	f, _ := load(s)
 
 	// Each layer takes n=2w-2 steps to get from 0 back to 0 e.g. n=4 for w=3; n=6 for w=4
 	// So a layer is at 0 each %n e.g. for n=4, when t=0,4,8,12...

@@ -21,15 +21,19 @@ func Main(args []string) {
 	}
 }
 
-func load(filename string) [][]string {
-	f, err := ioutil.ReadFile(filename)
-	if err != nil {
-		log.Fatal(err)
+func load(s string) [][]string {
+	if strings.HasPrefix(s, "@") {
+		f, err := ioutil.ReadFile(s[1:])
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		s = string(f)
 	}
 
 	m := make([][]string, 0)
 
-	for _, line := range strings.Split(string(f), "\n") {
+	for _, line := range strings.Split(s, "\n") {
 		if line == "" {
 			continue
 		}
@@ -40,8 +44,8 @@ func load(filename string) [][]string {
 	return m
 }
 
-func Muls(filename string) int {
-	m := load(filename)
+func Muls(s string) int {
+	m := load(s)
 
 	ip, regs := 0, make([]int, 26)
 
@@ -87,6 +91,14 @@ func Muls(filename string) int {
 
 	return count
 }
+
+// Here we took the assembly dump and converted it to Go code manually.
+// It's clear it's looking for primes.
+// So we added 3 simple optimisation that gives equivalent code:
+//
+//   1. exit loops when f == 1
+//   2. use a division to replace the inner loop
+//   3. early exit on sqrt
 
 func Debug() int {
 	b, c, f, h := 0, 0, 0, 0

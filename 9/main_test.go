@@ -6,94 +6,102 @@ import (
 
 func TestScore(t *testing.T) {
 	tests := []struct {
-		Stream string
+		Input  string
 		Result int
 	}{
 		{
-			Stream: "{}",
+			Input:  "{}",
 			Result: 1,
 		},
 		{
-			Stream: "{{{}}}",
+			Input:  "{{{}}}",
 			Result: 6,
 		},
 		{
-			Stream: "{{},{}}",
+			Input:  "{{},{}}",
 			Result: 5,
 		},
 		{
-			Stream: "{{{},{},{{}}}}",
+			Input:  "{{{},{},{{}}}}",
 			Result: 16,
 		},
 		{
-			Stream: "{<a>,<a>,<a>,<a>}",
+			Input:  "{<a>,<a>,<a>,<a>}",
 			Result: 1,
 		},
 		{
-			Stream: "{{<ab>},{<ab>},{<ab>},{<ab>}}",
+			Input:  "{{<ab>},{<ab>},{<ab>},{<ab>}}",
 			Result: 9,
 		},
 		{
-			Stream: "{{<!!>},{<!!>},{<!!>},{<!!>}}",
+			Input:  "{{<!!>},{<!!>},{<!!>},{<!!>}}",
 			Result: 9,
 		},
 		{
-			Stream: "{{<a!>},{<a!>},{<a!>},{<ab>}}",
+			Input:  "{{<a!>},{<a!>},{<a!>},{<ab>}}",
 			Result: 3,
 		},
 		{
-			Stream: "{{{<\"\"!>,<!<'}'ui!!!>!!!>!<{!!!!!>>},{}}}",
+			Input:  "{{{<\"\"!>,<!<'}'ui!!!>!!!>!<{!!!!!>>},{}}}",
 			Result: 9,
+		},
+		{
+			Input:  "@a.txt",
+			Result: 14204,
 		},
 	}
 
 	for i, test := range tests {
-		n := Score(test.Stream)
+		n := Score(test.Input)
 		if n != test.Result {
-			t.Fatalf("%d: %s '%d' (should be %d)", i, test.Stream, n, test.Result)
+			t.Fatalf("a.%d: %s '%d' (should be %d)", i, test.Input, n, test.Result)
 		}
 	}
 }
 
 func TestGarbage(t *testing.T) {
 	tests := []struct {
-		Stream string
+		Input  string
 		Result int
 	}{
 		{
-			Stream: "{}",
+			Input:  "{}",
 			Result: 0,
 		},
 		{
-			Stream: "<random characters>",
+			Input:  "<random characters>",
 			Result: 17,
 		},
 		{
-			Stream: "<<<<>",
+			Input:  "<<<<>",
 			Result: 3,
 		},
 		{
-			Stream: "<{!>}>",
+			Input:  "<{!>}>",
 			Result: 2,
 		},
 		{
-			Stream: "<!!>",
+			Input:  "<!!>",
 			Result: 0,
 		},
 		{
-			Stream: "<!!!>>",
+			Input:  "<!!!>>",
 			Result: 0,
 		},
 		{
-			Stream: "<{o\"i!a,<{i<a>",
+			Input:  "<{o\"i!a,<{i<a>",
 			Result: 10,
+		},
+		{
+			Input:  "@a.txt",
+			Result: 6622,
 		},
 	}
 
 	for i, test := range tests {
-		n := Garbage(test.Stream)
+		n := Garbage(test.Input)
 		if n != test.Result {
-			t.Fatalf("%d: %s '%d' (should be %d)", i, test.Stream, n, test.Result)
+			t.Fatalf("b.%d: %s '%d' (should be %d)", i, test.Input, n, test.Result)
 		}
 	}
 }

@@ -6,46 +6,46 @@ import (
 
 func TestValidCount(t *testing.T) {
 	tests := []struct {
-		File   string
+		Input  string
 		Result int
 	}{
 		{
-			File:   "ta.txt",
+			Input:  "@ta.txt",
 			Result: 2,
 		},
 		{
-			File:   "a.txt",
+			Input:  "@a.txt",
 			Result: 451,
 		},
 	}
 
 	for i, test := range tests {
-		n := ValidCount(test.File)
+		n := ValidCount(test.Input)
 		if n != test.Result {
-			t.Fatalf("%d: %d (should be %d)", i, n, test.Result)
+			t.Fatalf("a.%d: %d (should be %d)", i, n, test.Result)
 		}
 	}
 }
 
 func TestNewValidCount(t *testing.T) {
 	tests := []struct {
-		File   string
+		Input  string
 		Result int
 	}{
 		{
-			File:   "tb.txt",
+			Input:  "@tb.txt",
 			Result: 3,
 		},
 		{
-			File:   "b.txt",
+			Input:  "@b.txt",
 			Result: 223,
 		},
 	}
 
 	for i, test := range tests {
-		n := NewValidCount(test.File)
+		n := NewValidCount(test.Input)
 		if n != test.Result {
-			t.Fatalf("%d: %d (should be %d)", i, n, test.Result)
+			t.Fatalf("b.%d: %d (should be %d)", i, n, test.Result)
 		}
 	}
 }

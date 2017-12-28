@@ -9,7 +9,7 @@ import (
 
 func Main(args []string) {
 	if len(args) != 2 {
-		log.Fatal("usage: advent-of-code-1027 6[a|b] 'filename'")
+		log.Fatal("usage: advent-of-code-1027 6[a|b] '1,2,3,...'")
 	}
 
 	ints := make([]int, 0)

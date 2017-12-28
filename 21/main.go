@@ -10,7 +10,7 @@ import (
 
 func Main(args []string) {
 	if len(args) != 2 {
-		log.Fatal("usage: advent-of-code-2017 21[a|b] filename iterations")
+		log.Fatal("usage: advent-of-code-2017 21[a|b] 'input' iterations")
 	}
 
 	n, err := strconv.Atoi(args[2])
@@ -25,15 +25,19 @@ type rule struct {
 	s []string
 }
 
-func load(filename string) map[string]rule {
-	f, err := ioutil.ReadFile(filename)
-	if err != nil {
-		log.Fatal(err)
+func load(s string) map[string]rule {
+	if strings.HasPrefix(s, "@") {
+		f, err := ioutil.ReadFile(s[1:])
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		s = string(f)
 	}
 
 	m := make(map[string]rule)
 
-	for _, line := range strings.Split(string(f), "\n") {
+	for _, line := range strings.Split(s, "\n") {
 		if line == "" {
 			continue
 		}
@@ -119,8 +123,8 @@ func load(filename string) map[string]rule {
 	return p
 }
 
-func Pixels(filename string, loops int) int {
-	m := load(filename)
+func Pixels(s string, loops int) int {
+	m := load(s)
 
 	p := []string{".#.", "..#", "###"}
 

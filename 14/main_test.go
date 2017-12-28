@@ -22,7 +22,7 @@ func TestUsed(t *testing.T) {
 	for i, test := range tests {
 		n := Used(test.Hash)
 		if n != test.Result {
-			t.Fatalf("%d: %s '%d' (should be %d)", i, test.Hash, n, test.Result)
+			t.Fatalf("a.%d: %s '%d' (should be %d)", i, test.Hash, n, test.Result)
 		}
 	}
 }
@@ -45,7 +45,7 @@ func TestRegions(t *testing.T) {
 	for i, test := range tests {
 		n := Regions(test.Hash)
 		if n != test.Result {
-			t.Fatalf("%d: %s '%d' (should be %d)", i, test.Hash, n, test.Result)
+			t.Fatalf("b.%d: %s '%d' (should be %d)", i, test.Hash, n, test.Result)
 		}
 	}
 }

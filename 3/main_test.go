@@ -32,7 +32,7 @@ func TestSteps(t *testing.T) {
 	for i, test := range tests {
 		n := Steps(test.N)
 		if n != test.Result {
-			t.Fatalf("%d: %d: %d (should be %d)", i, test.N, n, test.Result)
+			t.Fatalf("a.%d: %d: %d (should be %d)", i, test.N, n, test.Result)
 		}
 	}
 }
@@ -84,7 +84,7 @@ func TestSums(t *testing.T) {
 	for i, test := range tests {
 		n := Sums(test.N)
 		if n != test.Result {
-			t.Fatalf("%d: %d: %d (should be %d)", i, test.N, n, test.Result)
+			t.Fatalf("b.%d: %d: %d (should be %d)", i, test.N, n, test.Result)
 		}
 	}
 }

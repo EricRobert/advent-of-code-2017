@@ -18,7 +18,7 @@ func TestRun(t *testing.T) {
 	for i, test := range tests {
 		n := Run(test.Table)
 		if n != test.Result {
-			t.Fatalf("%d: %d (should be %d)", i, n, test.Result)
+			t.Fatalf("a.%d: %d (should be %d)", i, n, test.Result)
 		}
 	}
 }
@@ -37,7 +37,7 @@ func TestRun2(t *testing.T) {
 	for i, test := range tests {
 		n := Run2(test.Table)
 		if n != test.Result {
-			t.Fatalf("%d: %d (should be %d)", i, n, test.Result)
+			t.Fatalf("b.%d: %d (should be %d)", i, n, test.Result)
 		}
 	}
 }

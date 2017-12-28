@@ -15,26 +15,32 @@ func Main(args []string) {
 	switch args[0] {
 	case "22a", "22":
 		fmt.Print(Infect(args[1]))
+	case "22b":
+		fmt.Print(Infect2(args[1]))
 	}
 }
 
-func load(filename string) (map[string]struct{}, int, int) {
-	f, err := ioutil.ReadFile(filename)
-	if err != nil {
-		log.Fatal(err)
+func load(s string) (map[[2]int]struct{}, int, int) {
+	if strings.HasPrefix(s, "@") {
+		f, err := ioutil.ReadFile(s[1:])
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		s = string(f)
 	}
 
-	m := make(map[string]struct{})
+	m := make(map[[2]int]struct{})
 
 	y := 0
-	for _, line := range strings.Split(string(f), "\n") {
+	for _, line := range strings.Split(s, "\n") {
 		if line == "" {
 			continue
 		}
 
 		for x := range line {
 			if line[x] == '#' {
-				m[fmt.Sprintf("%dx%d", x, y)] = struct{}{}
+				m[[2]int{x, y}] = struct{}{}
 			}
 		}
 
@@ -44,26 +50,21 @@ func load(filename string) (map[string]struct{}, int, int) {
 	return m, y / 2, y / 2
 }
 
-func Infect(filename string) int {
-	m, x, y := load(filename)
+func Infect(s string) int {
+	m, x, y := load(s)
 
-	key := func(x, y int) string {
-		return fmt.Sprintf("%dx%d", x, y)
-	}
+	count, dir := 0, 0
 
-	count := 0
-
-	dir := 0
 	for burst := 0; burst < 10000; burst++ {
-		if _, ok := m[key(x, y)]; ok {
+		if _, ok := m[[2]int{x, y}]; ok {
 			dir++
-			delete(m, key(x, y))
+			delete(m, [2]int{x, y})
 		} else {
 			if dir--; dir < 0 {
 				dir += 4
 			}
 
-			m[key(x, y)] = struct{}{}
+			m[[2]int{x, y}] = struct{}{}
 			count++
 		}
 
@@ -88,40 +89,36 @@ const (
 	Flagged  = 3
 )
 
-func Infect2(filename string) int {
-	m0, x, y := load(filename)
+func Infect2(s string) int {
+	loaded, x, y := load(s)
 
-	m := make(map[string]int)
-	for k := range m0 {
+	// Initialize the input as being Infected and keep track of the state in the map.
+	m := make(map[[2]int]int)
+	for k := range loaded {
 		m[k] = Infected
 	}
 
-	key := func(x, y int) string {
-		return fmt.Sprintf("%dx%d", x, y)
-	}
+	count, dir := 0, 0
 
-	count := 0
-
-	dir := 0
 	for burst := 0; burst < 10000000; burst++ {
-		state, ok := m[key(x, y)]
+		state, ok := m[[2]int{x, y}]
 		if !ok {
 			if dir--; dir < 0 {
 				dir += 4
 			}
 
-			m[key(x, y)] = Weakened
+			m[[2]int{x, y}] = Weakened
 		} else {
 			switch state {
 			case Weakened:
-				m[key(x, y)] = Infected
+				m[[2]int{x, y}] = Infected
 				count++
 			case Infected:
 				dir++
-				m[key(x, y)] = Flagged
+				m[[2]int{x, y}] = Flagged
 			case Flagged:
 				dir += 2
-				delete(m, key(x, y))
+				delete(m, [2]int{x, y})
 			}
 		}
 

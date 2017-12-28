@@ -6,47 +6,47 @@ import (
 
 func TestDance(t *testing.T) {
 	tests := []struct {
-		File   string
+		Input  string
 		Key    string
 		Result string
 	}{
 		{
-			File:   "t.txt",
+			Input:  "@t.txt",
 			Key:    "abcde",
 			Result: "baedc",
 		},
 		{
-			File:   "a.txt",
+			Input:  "@a.txt",
 			Key:    "abcdefghijklmnop",
 			Result: "cknmidebghlajpfo",
 		},
 	}
 
 	for i, test := range tests {
-		s := Dance(test.File, test.Key)
+		s := Dance(test.Input, test.Key)
 		if s != test.Result {
-			t.Fatalf("%d: %s '%s' (should be %s)", i, test.File, s, test.Result)
+			t.Fatalf("a.%d: %s '%s' (should be %s)", i, test.Input, s, test.Result)
 		}
 	}
 }
 
 func TestLotsOfDances(t *testing.T) {
 	tests := []struct {
-		File   string
+		Input  string
 		Key    string
 		Result string
 	}{
 		{
-			File:   "a.txt",
+			Input:  "@a.txt",
 			Key:    "abcdefghijklmnop",
 			Result: "cbolhmkgfpenidaj",
 		},
 	}
 
 	for i, test := range tests {
-		s := LotsOfDances(test.File, test.Key)
+		s := LotsOfDances(test.Input, test.Key)
 		if s != test.Result {
-			t.Fatalf("%d: %s '%s' (should be %s)", i, test.File, s, test.Result)
+			t.Fatalf("b.%d: %s '%s' (should be %s)", i, test.Input, s, test.Result)
 		}
 	}
 }

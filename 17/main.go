@@ -8,7 +8,7 @@ import (
 
 func Main(args []string) {
 	if len(args) != 2 {
-		log.Fatal("usage: advent-of-code-2017 1y[a|b] input")
+		log.Fatal("usage: advent-of-code-2017 17[a|b] input")
 	}
 
 	k, err := strconv.Atoi(args[1])
@@ -19,6 +19,8 @@ func Main(args []string) {
 	switch args[0] {
 	case "17a", "17":
 		fmt.Print(Spin(k))
+	case "17b":
+		fmt.Print(SpinAngry(k))
 	}
 }
 

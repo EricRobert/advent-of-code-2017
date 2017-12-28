@@ -10,7 +10,7 @@ import (
 
 func Main(args []string) {
 	if len(args) != 2 {
-		log.Fatal("usage: advent-of-code-2017 20[a|b] filename")
+		log.Fatal("usage: advent-of-code-2017 20[a|b] 'input'")
 	}
 
 	switch args[0] {
@@ -55,15 +55,19 @@ func (p *Particle) DistanceAt(t int) int {
 	return abs(dx) + abs(dy) + abs(dz)
 }
 
-func load(filename string) []*Particle {
-	f, err := ioutil.ReadFile(filename)
-	if err != nil {
-		log.Fatal(err)
+func load(s string) []*Particle {
+	if strings.HasPrefix(s, "@") {
+		f, err := ioutil.ReadFile(s[1:])
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		s = string(f)
 	}
 
 	m := make([]*Particle, 0)
 
-	for _, line := range strings.Split(string(f), "\n") {
+	for _, line := range strings.Split(s, "\n") {
 		if line == "" {
 			continue
 		}
@@ -94,8 +98,8 @@ func load(filename string) []*Particle {
 	return m
 }
 
-func Closest(filename string) int {
-	m := load(filename)
+func Closest(s string) int {
+	m := load(s)
 
 	closest, minimum := -1, 0
 	for i, p := range m {
@@ -109,8 +113,8 @@ func Closest(filename string) int {
 	return closest
 }
 
-func Collide(filename string) int {
-	m := load(filename)
+func Collide(s string) int {
+	m := load(s)
 
 	for n := 0; n < 1000; n++ {
 		z := make(map[string][]int)

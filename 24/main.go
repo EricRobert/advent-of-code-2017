@@ -15,21 +15,27 @@ func Main(args []string) {
 
 	switch args[0] {
 	case "24a", "24":
-		fmt.Print(Bridge(args[1]))
+		fmt.Print(Strongest(args[1]))
+	case "24b":
+		fmt.Print(Longest(args[1]))
 	}
 }
 
 type Conn [2]int
 
-func load(filename string) []Conn {
-	f, err := ioutil.ReadFile(filename)
-	if err != nil {
-		log.Fatal(err)
+func load(s string) ([]Conn, []int) {
+	if strings.HasPrefix(s, "@") {
+		f, err := ioutil.ReadFile(s[1:])
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		s = string(f)
 	}
 
-	m := make([]Conn, 0)
+	conns := make([]Conn, 0)
 
-	for _, line := range strings.Split(string(f), "\n") {
+	for _, line := range strings.Split(s, "\n") {
 		if line == "" {
 			continue
 		}
@@ -49,14 +55,23 @@ func load(filename string) []Conn {
 			log.Fatal(err)
 		}
 
-		m = append(m, Conn{a, b})
+		conns = append(conns, Conn{a, b})
 	}
 
-	return m
+	left := []int{}
+	for i := range conns {
+		left = append(left, i)
+	}
+
+	return conns, left
 }
 
 func build(conns []Conn, port int, left []int) [][]int {
 	result := make([][]int, 0)
+
+	// Here we build all possible bridges.
+	// We keep track of which components are left and search for one that match the end-of-the-bridge.
+	// Each step recursively build a smaller bridge with left components.
 
 	for i, n := range left {
 		less := func() []int {
@@ -64,6 +79,7 @@ func build(conns []Conn, port int, left []int) [][]int {
 			if i != len(left) {
 				list = append(list, left[i+1:]...)
 			}
+
 			return list
 		}
 
@@ -94,13 +110,8 @@ func build(conns []Conn, port int, left []int) [][]int {
 	return result
 }
 
-func Bridge(filename string) int {
-	conns := load(filename)
-
-	left := []int{}
-	for i := range conns {
-		left = append(left, i)
-	}
+func Strongest(s string) int {
+	conns, left := load(s)
 
 	max := 0
 
@@ -119,13 +130,8 @@ func Bridge(filename string) int {
 	return max
 }
 
-func Longest(filename string) int {
-	conns := load(filename)
-
-	left := []int{}
-	for i := range conns {
-		left = append(left, i)
-	}
+func Longest(s string) int {
+	conns, left := load(s)
 
 	max, longest := 0, 0
 

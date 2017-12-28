@@ -21,15 +21,19 @@ func Main(args []string) {
 	}
 }
 
-func play(filename string, p []int) []int {
-	f, err := ioutil.ReadFile(filename)
-	if err != nil {
-		log.Fatal(err)
+func play(s string, p []int) []int {
+	if strings.HasPrefix(s, "@") {
+		f, err := ioutil.ReadFile(s[1:])
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		s = string(f)
 	}
 
 	q := make([]int, len(p))
 
-	for _, m := range strings.Split(string(f), ",") {
+	for _, m := range strings.Split(s, ",") {
 		if m == "" {
 			continue
 		}
@@ -76,8 +80,6 @@ func play(filename string, p []int) []int {
 			b := find(m[3])
 			p[a], p[b] = p[b], p[a]
 		}
-
-		//fmt.Println(m, pretty(p))
 	}
 
 	return p
@@ -92,18 +94,17 @@ func pretty(x []int) string {
 	return string(r)
 }
 
-func Dance(filename, key string) string {
+func Dance(s, key string) string {
 	p := make([]int, 0)
 
 	for _, c := range key {
 		p = append(p, int(c))
 	}
 
-	p = play(filename, p)
-	return pretty(p)
+	return pretty(play(s, p))
 }
 
-func LotsOfDances(filename, key string) string {
+func LotsOfDances(s, key string) string {
 	p := make([]int, 0)
 
 	for _, c := range key {
@@ -115,7 +116,7 @@ func LotsOfDances(filename, key string) string {
 	}
 
 	for {
-		p = play(filename, p)
+		p = play(s, p)
 
 		r := pretty(p)
 		if _, ok := m[r]; ok {
@@ -129,7 +130,7 @@ func LotsOfDances(filename, key string) string {
 	//log.Println("loop:", pretty(p), n)
 
 	for i := 0; i < 1000000000%n; i++ {
-		p = play(filename, p)
+		p = play(s, p)
 	}
 
 	return pretty(p)

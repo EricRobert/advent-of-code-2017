@@ -10,18 +10,23 @@ import (
 
 func Main(args []string) {
 	if len(args) != 2 {
-		log.Fatal("usage: advent-of-code-1027 5 'filename'")
+		log.Fatal("usage: advent-of-code-1027 5 'input'")
 	}
 
-	data, err := ioutil.ReadFile(args[1])
-	if err != nil {
-		log.Fatalf("%s: %s", args[1], err)
+	s := args[1]
+
+	if strings.HasPrefix(s, "@") {
+		f, err := ioutil.ReadFile(s[1:])
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		s = string(f)
 	}
 
 	ints := make([]int, 0)
 
-	lines := strings.Split(string(data), "\n")
-	for _, line := range lines {
+	for _, line := range strings.Split(s, "\n") {
 		if line == "" {
 			continue
 		}

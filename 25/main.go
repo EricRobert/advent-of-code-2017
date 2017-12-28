@@ -7,13 +7,10 @@ import (
 
 func Main(args []string) {
 	if len(args) != 2 {
-		log.Fatal("usage: advent-of-code-2017 25[a|b] filename")
+		log.Fatal("usage: advent-of-code-2017 25")
 	}
 
-	switch args[0] {
-	case "25a", "25":
-		fmt.Print(Turing())
-	}
+	fmt.Print(Turing())
 }
 
 type State [2]Action

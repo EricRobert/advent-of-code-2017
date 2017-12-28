@@ -9,7 +9,7 @@ import (
 
 func Main(args []string) {
 	if len(args) != 2 {
-		log.Fatal("usage: advent-of-code-1027 11[a|b] [@file|a,b,c,d...]")
+		log.Fatal("usage: advent-of-code-1027 11[a|b] 'input'")
 	}
 
 	switch args[0] {

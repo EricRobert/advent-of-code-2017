@@ -25,6 +25,10 @@ func TestDistance(t *testing.T) {
 			Path:   "se,sw,se,sw,sw",
 			Result: 3,
 		},
+		{
+			Path:   "@a.txt",
+			Result: 644,
+		},
 	}
 
 	for i, test := range tests {

@@ -6,46 +6,46 @@ import (
 
 func TestSeverity(t *testing.T) {
 	tests := []struct {
-		File   string
+		Input  string
 		Result int
 	}{
 		{
-			File:   "t.txt",
+			Input:  "@t.txt",
 			Result: 24,
 		},
 		{
-			File:   "a.txt",
+			Input:  "@a.txt",
 			Result: 632,
 		},
 	}
 
 	for i, test := range tests {
-		n := Severity(test.File)
+		n := Severity(test.Input)
 		if n != test.Result {
-			t.Fatalf("%d: %s '%d' (should be %d)", i, test.File, n, test.Result)
+			t.Fatalf("a.%d: %s '%d' (should be %d)", i, test.Input, n, test.Result)
 		}
 	}
 }
 
 func TestDelay(t *testing.T) {
 	tests := []struct {
-		File   string
+		Input  string
 		Result int
 	}{
 		{
-			File:   "t.txt",
+			Input:  "@t.txt",
 			Result: 10,
 		},
 		{
-			File:   "a.txt",
+			Input:  "@a.txt",
 			Result: 3849742,
 		},
 	}
 
 	for i, test := range tests {
-		n := Delay2(test.File)
+		n := Delay2(test.Input)
 		if n != test.Result {
-			t.Fatalf("%d: %s '%d' (should be %d)", i, test.File, n, test.Result)
+			t.Fatalf("b.%d: %s '%d' (should be %d)", i, test.Input, n, test.Result)
 		}
 	}
 }

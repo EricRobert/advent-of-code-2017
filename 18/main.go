@@ -22,15 +22,19 @@ func Main(args []string) {
 	}
 }
 
-func load(filename string) [][]string {
-	f, err := ioutil.ReadFile(filename)
-	if err != nil {
-		log.Fatal(err)
+func load(s string) [][]string {
+	if strings.HasPrefix(s, "@") {
+		f, err := ioutil.ReadFile(s[1:])
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		s = string(f)
 	}
 
 	ops := make([][]string, 0)
 
-	for _, line := range strings.Split(string(f), "\n") {
+	for _, line := range strings.Split(s, "\n") {
 		if line == "" {
 			continue
 		}
@@ -41,8 +45,8 @@ func load(filename string) [][]string {
 	return ops
 }
 
-func Duet(filename string) int {
-	ops := load(filename)
+func Duet(s string) int {
+	ops := load(s)
 	ip, regs, f := 0, make([]int, 26), 0
 
 	value := func(s string) int {
@@ -93,6 +97,16 @@ func Duet(filename string) int {
 	return 0
 }
 
+// This one was tricky to do with Go channels...
+// With 2 concurrent Go routines, it's a bit funky to detect the deadlock.
+// Writing was "solved" with a large buffered channel.
+// But then, reading will cause the Go runtime to detect the deadlock and kill the application.
+// Initially, I was logging the count so that I could retreive it when it deadlocked.
+// But of course, I could not keep that as a test.
+// What happens now it that both queues are using a common watcher.
+// This watcher executes non-blocking functions to track the size of both queues.
+// It has a deadlock function that is used before reading to avoid the actual deadlock.
+
 type watch struct {
 	c chan func()
 	n []int
@@ -137,8 +151,8 @@ func (q *queues) set(p, i int) {
 	}
 }
 
-func Two(filename string) int {
-	ops := load(filename)
+func Two(s string) int {
+	ops := load(s)
 
 	q := &queues{
 		w: &watch{

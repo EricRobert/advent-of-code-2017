@@ -13,7 +13,7 @@ func Main(args []string) {
 
 	i, err := strconv.Atoi(args[1])
 	if err != nil {
-		log.Fatalf("%d: %s", i, err)
+		log.Fatal(err)
 	}
 
 	switch args[0] {

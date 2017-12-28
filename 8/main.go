@@ -23,10 +23,14 @@ func Main(args []string) {
 
 type CPU map[string]int
 
-func (cpu CPU) execute(filename string) {
-	f, err := ioutil.ReadFile(filename)
-	if err != nil {
-		log.Fatal(err)
+func (cpu CPU) execute(s string) {
+	if strings.HasPrefix(s, "@") {
+		f, err := ioutil.ReadFile(s[1:])
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		s = string(f)
 	}
 
 	num := func(s string) int {
@@ -38,8 +42,7 @@ func (cpu CPU) execute(filename string) {
 		return i
 	}
 
-	lines := strings.Split(string(f), "\n")
-	for _, line := range lines {
+	for _, line := range strings.Split(s, "\n") {
 		if line == "" {
 			continue
 		}
@@ -85,9 +88,9 @@ func (cpu CPU) run(a, op string, i int, b, cond string, j int) {
 	}
 }
 
-func Maximum(filename string) int {
+func Maximum(s string) int {
 	cpu := CPU{}
-	cpu.execute(filename)
+	cpu.execute(s)
 
 	first, max := true, 0
 	for k, v := range cpu {
@@ -100,8 +103,8 @@ func Maximum(filename string) int {
 	return max
 }
 
-func Highest(filename string) int {
+func Highest(s string) int {
 	cpu := CPU{}
-	cpu.execute(filename)
+	cpu.execute(s)
 	return cpu["_max"]
 }

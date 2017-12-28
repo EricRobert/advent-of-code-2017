@@ -6,26 +6,25 @@ import (
 
 func TestMuls(t *testing.T) {
 	tests := []struct {
-		File   string
+		Input  string
 		Result int
 	}{
 		{
-			File:   "a.txt",
+			Input:  "@a.txt",
 			Result: 3025,
 		},
 	}
 
 	for i, test := range tests {
-		n := Muls(test.File)
+		n := Muls(test.Input)
 		if n != test.Result {
-			t.Fatalf("%d: %s '%d' (should be %d)", i, test.File, n, test.Result)
+			t.Fatalf("a.%d: %s '%d' (should be %d)", i, test.Input, n, test.Result)
 		}
 	}
 }
 
 func TestDebug(t *testing.T) {
 	tests := []struct {
-		File   string
 		Result int
 	}{
 		{
@@ -36,7 +35,7 @@ func TestDebug(t *testing.T) {
 	for i, test := range tests {
 		n := Debug()
 		if n != test.Result {
-			t.Fatalf("%d: '%d' (should be %d)", i, n, test.Result)
+			t.Fatalf("b.%d: '%d' (should be %d)", i, n, test.Result)
 		}
 	}
 }

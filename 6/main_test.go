@@ -22,7 +22,7 @@ func TestRun(t *testing.T) {
 	for i, test := range tests {
 		n := Run(test.Banks)
 		if n != test.Result {
-			t.Fatalf("%d: %d (should be %d)", i, n, test.Result)
+			t.Fatalf("a.%d: %d (should be %d)", i, n, test.Result)
 		}
 	}
 }
@@ -45,7 +45,7 @@ func TestLoop(t *testing.T) {
 	for i, test := range tests {
 		n := Loop(test.Banks)
 		if n != test.Result {
-			t.Fatalf("%d: %d (should be %d)", i, n, test.Result)
+			t.Fatalf("b.%d: %d (should be %d)", i, n, test.Result)
 		}
 	}
 }

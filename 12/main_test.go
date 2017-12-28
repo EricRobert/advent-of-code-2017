@@ -10,11 +10,11 @@ func TestCount(t *testing.T) {
 		Result int
 	}{
 		{
-			File:   "t.txt",
+			File:   "@t.txt",
 			Result: 6,
 		},
 		{
-			File:   "a.txt",
+			File:   "@a.txt",
 			Result: 175,
 		},
 	}
@@ -22,7 +22,7 @@ func TestCount(t *testing.T) {
 	for i, test := range tests {
 		n := Count(test.File)
 		if n != test.Result {
-			t.Fatalf("%d: %s '%d' (should be %d)", i, test.File, n, test.Result)
+			t.Fatalf("a.%d: %s '%d' (should be %d)", i, test.File, n, test.Result)
 		}
 	}
 }
@@ -33,11 +33,11 @@ func TestTotal(t *testing.T) {
 		Result int
 	}{
 		{
-			File:   "t.txt",
+			File:   "@t.txt",
 			Result: 2,
 		},
 		{
-			File:   "a.txt",
+			File:   "@a.txt",
 			Result: 213,
 		},
 	}
@@ -45,7 +45,7 @@ func TestTotal(t *testing.T) {
 	for i, test := range tests {
 		n := Total(test.File)
 		if n != test.Result {
-			t.Fatalf("%d: %s '%d' (should be %d)", i, test.File, n, test.Result)
+			t.Fatalf("b.%d: %s '%d' (should be %d)", i, test.File, n, test.Result)
 		}
 	}
 }

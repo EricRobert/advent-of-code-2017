@@ -25,7 +25,7 @@ func TestCount(t *testing.T) {
 	for i, test := range tests {
 		n := Count(test.A, test.B)
 		if n != test.Result {
-			t.Fatalf("%d: %d,%d '%d' (should be %d)", i, test.A, test.B, n, test.Result)
+			t.Fatalf("a.%d: %d,%d '%d' (should be %d)", i, test.A, test.B, n, test.Result)
 		}
 	}
 }
@@ -51,7 +51,7 @@ func TestCountSlow(t *testing.T) {
 	for i, test := range tests {
 		n := CountSlow(test.A, test.B)
 		if n != test.Result {
-			t.Fatalf("%d: %d,%d '%d' (should be %d)", i, test.A, test.B, n, test.Result)
+			t.Fatalf("b.%d: %d,%d '%d' (should be %d)", i, test.A, test.B, n, test.Result)
 		}
 	}
 }

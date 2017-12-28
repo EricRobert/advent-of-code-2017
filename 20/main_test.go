@@ -6,38 +6,38 @@ import (
 
 func TestClosest(t *testing.T) {
 	tests := []struct {
-		File   string
+		Input  string
 		Result int
 	}{
 		{
-			File:   "a.txt",
+			Input:  "@a.txt",
 			Result: 457,
 		},
 	}
 
 	for i, test := range tests {
-		n := Closest(test.File)
+		n := Closest(test.Input)
 		if n != test.Result {
-			t.Fatalf("%d: %s '%d' (should be %d)", i, test.File, n, test.Result)
+			t.Fatalf("a.%d: %s '%d' (should be %d)", i, test.Input, n, test.Result)
 		}
 	}
 }
 
 func TestCollide(t *testing.T) {
 	tests := []struct {
-		File   string
+		Input  string
 		Result int
 	}{
 		{
-			File:   "a.txt",
+			Input:  "@a.txt",
 			Result: 448,
 		},
 	}
 
 	for i, test := range tests {
-		n := Collide(test.File)
+		n := Collide(test.Input)
 		if n != test.Result {
-			t.Fatalf("%d: %s '%d' (should be %d)", i, test.File, n, test.Result)
+			t.Fatalf("b.%d: %s '%d' (should be %d)", i, test.Input, n, test.Result)
 		}
 	}
 }

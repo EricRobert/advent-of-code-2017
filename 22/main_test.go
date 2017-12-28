@@ -6,46 +6,46 @@ import (
 
 func TestInfect(t *testing.T) {
 	tests := []struct {
-		File   string
+		Input  string
 		Result int
 	}{
 		{
-			File:   "t.txt",
+			Input:  "@t.txt",
 			Result: 5587,
 		},
 		{
-			File:   "a.txt",
+			Input:  "@a.txt",
 			Result: 5280,
 		},
 	}
 
 	for i, test := range tests {
-		n := Infect(test.File)
+		n := Infect(test.Input)
 		if n != test.Result {
-			t.Fatalf("%d: %s '%d' (should be %d)", i, test.File, n, test.Result)
+			t.Fatalf("a.%d: %s '%d' (should be %d)", i, test.Input, n, test.Result)
 		}
 	}
 }
 
 func TestInfect2(t *testing.T) {
 	tests := []struct {
-		File   string
+		Input  string
 		Result int
 	}{
 		{
-			File:   "t.txt",
+			Input:  "@t.txt",
 			Result: 2511944,
 		},
 		{
-			File:   "a.txt",
+			Input:  "@a.txt",
 			Result: 2512261,
 		},
 	}
 
 	for i, test := range tests {
-		n := Infect2(test.File)
+		n := Infect2(test.Input)
 		if n != test.Result {
-			t.Fatalf("%d: %s '%d' (should be %d)", i, test.File, n, test.Result)
+			t.Fatalf("b.%d: %s '%d' (should be %d)", i, test.Input, n, test.Result)
 		}
 	}
 }

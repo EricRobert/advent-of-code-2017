@@ -21,15 +21,18 @@ func Main(args []string) {
 	}
 }
 
-func load(filename string) Nodes {
-	f, err := ioutil.ReadFile(filename)
-	if err != nil {
-		log.Fatal(err)
+func load(s string) Nodes {
+	if strings.HasPrefix(s, "@") {
+		f, err := ioutil.ReadFile(s[1:])
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		s = string(f)
 	}
 
-	lines := strings.Split(string(f), "\n")
 	nodes := Nodes{}
-	for _, line := range lines {
+	for _, line := range strings.Split(s, "\n") {
 		if line == "" {
 			continue
 		}
@@ -162,13 +165,14 @@ func (m Nodes) Root() string {
 	return root
 }
 
-func Root(filename string) string {
-	nodes := load(filename)
+func Root(s string) string {
+	nodes := load(s)
 	return nodes.Root()
 }
 
-func FirstWrong(filename string) int {
-	nodes := load(filename)
+func FirstWrong(s string) int {
+	nodes := load(s)
+
 	root := nodes.Root()
 	n, ok := nodes.FirstWrong(root)
 	if !ok {

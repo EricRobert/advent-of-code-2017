@@ -10,27 +10,33 @@ import (
 
 func Main(args []string) {
 	if len(args) != 2 {
-		log.Fatal("usage: advent-of-code-1027 12[a|b] <filename>")
+		log.Fatal("usage: advent-of-code-1027 12[a|b] 'input'")
 	}
 
 	switch args[0] {
 	case "12a", "12":
 		fmt.Print(Count(args[1]))
+	case "12b":
+		fmt.Print(Total(args[1]))
 	}
 }
 
 type Group map[int]struct{}
 type Graph map[int][]int
 
-func load(filename string) Graph {
-	f, err := ioutil.ReadFile(filename)
-	if err != nil {
-		log.Fatal(err)
+func load(s string) Graph {
+	if strings.HasPrefix(s, "@") {
+		f, err := ioutil.ReadFile(s[1:])
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		s = string(f)
 	}
 
 	m := Graph{}
 
-	for _, line := range strings.Split(string(f), "\n") {
+	for _, line := range strings.Split(s, "\n") {
 		if line == "" {
 			continue
 		}
@@ -88,14 +94,14 @@ func (m Graph) Group(q int) Group {
 	return g
 }
 
-func Count(filename string) int {
-	m := load(filename)
+func Count(s string) int {
+	m := load(s)
 	g := m.Group(0)
 	return len(g)
 }
 
-func Total(filename string) int {
-	m := load(filename)
+func Total(s string) int {
+	m := load(s)
 	w := make(map[int]struct{})
 	h := []Group{}
 

@@ -15,15 +15,19 @@ func Main(args []string) {
 	fmt.Print(Walk(args[1]))
 }
 
-func Walk(filename string) (string, int) {
-	f, err := ioutil.ReadFile(filename)
-	if err != nil {
-		log.Fatal(err)
+func Walk(s string) (string, int) {
+	if strings.HasPrefix(s, "@") {
+		f, err := ioutil.ReadFile(s[1:])
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		s = string(f)
 	}
 
 	m := make([]string, 0)
 
-	for _, line := range strings.Split(string(f), "\n") {
+	for _, line := range strings.Split(s, "\n") {
 		if line == "" {
 			continue
 		}

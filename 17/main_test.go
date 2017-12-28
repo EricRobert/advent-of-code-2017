@@ -22,7 +22,7 @@ func TestSpin(t *testing.T) {
 	for i, test := range tests {
 		n := Spin(test.Input)
 		if n != test.Result {
-			t.Fatalf("%d: %d '%d' (should be %d)", i, test.Input, n, test.Result)
+			t.Fatalf("a.%d: %d '%d' (should be %d)", i, test.Input, n, test.Result)
 		}
 	}
 }
@@ -41,7 +41,7 @@ func TestSpinAngry(t *testing.T) {
 	for i, test := range tests {
 		n := SpinAngry(test.Input)
 		if n != test.Result {
-			t.Fatalf("%d: %d '%d' (should be %d)", i, test.Input, n, test.Result)
+			t.Fatalf("b.%d: %d '%d' (should be %d)", i, test.Input, n, test.Result)
 		}
 	}
 }

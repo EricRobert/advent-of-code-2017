@@ -4,48 +4,48 @@ import (
 	"testing"
 )
 
-func TestBridge(t *testing.T) {
+func TestStrongest(t *testing.T) {
 	tests := []struct {
-		File   string
+		Input  string
 		Result int
 	}{
 		{
-			File:   "t.txt",
+			Input:  "@t.txt",
 			Result: 31,
 		},
 		{
-			File:   "a.txt",
+			Input:  "@a.txt",
 			Result: 1511,
 		},
 	}
 
 	for i, test := range tests {
-		n := Bridge(test.File)
+		n := Strongest(test.Input)
 		if n != test.Result {
-			t.Fatalf("%d: %s '%d' (should be %d)", i, test.File, n, test.Result)
+			t.Fatalf("a.%d: %s '%d' (should be %d)", i, test.Input, n, test.Result)
 		}
 	}
 }
 
 func TestLongest(t *testing.T) {
 	tests := []struct {
-		File   string
+		Input  string
 		Result int
 	}{
 		{
-			File:   "t.txt",
+			Input:  "@t.txt",
 			Result: 19,
 		},
 		{
-			File:   "a.txt",
+			Input:  "@a.txt",
 			Result: 1471,
 		},
 	}
 
 	for i, test := range tests {
-		n := Longest(test.File)
+		n := Longest(test.Input)
 		if n != test.Result {
-			t.Fatalf("%d: %s '%d' (should be %d)", i, test.File, n, test.Result)
+			t.Fatalf("b.%d: %s '%d' (should be %d)", i, test.Input, n, test.Result)
 		}
 	}
 }

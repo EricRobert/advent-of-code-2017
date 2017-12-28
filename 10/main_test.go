@@ -24,7 +24,7 @@ func TestMultiply(t *testing.T) {
 	for i, test := range tests {
 		n := Multiply(test.List, test.Length)
 		if n != test.Result {
-			t.Fatalf("%d: %s '%d' (should be %d)", i, test.List, n, test.Result)
+			t.Fatalf("a.%d: %s '%d' (should be %d)", i, test.List, n, test.Result)
 		}
 	}
 }
@@ -47,7 +47,7 @@ func TestHash(t *testing.T) {
 	for i, test := range tests {
 		s := Hash(test.Length)
 		if s != test.Result {
-			t.Fatalf("%d: %s '%s' (should be %s)", i, test.Length, s, test.Result)
+			t.Fatalf("b.%d: %s '%s' (should be %s)", i, test.Length, s, test.Result)
 		}
 	}
 }
